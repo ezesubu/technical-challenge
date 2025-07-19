@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "sourceRoot": "apps",
+  "compilerOptions": {
+    "deleteOutDir": true
+  },
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "api-gateway/src"
+    },
+    "patients-ms": {
+      "type": "application",
+      "root": "patients-ms",
+      "entryFile": "main",
+      "sourceRoot": "patients-ms/src"
+    },
+    "providers-ms": {
+      "type": "application",
+      "root": "apps/providers-ms",
+      "entryFile": "main",
+      "sourceRoot": "providers-ms/src"
+    },
+    "statuses-ms": {
+      "type": "application",
+      "root": "apps/statuses-ms",
+      "entryFile": "main",
+      "sourceRoot": "statuses-ms/src"
+    }
+  }
+}

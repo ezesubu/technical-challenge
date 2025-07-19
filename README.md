@@ -1,138 +1,171 @@
-## Technical Challenge
+# 🏥 Medwork – Patient Management Platform
 
-### Background
+Medwork is a full-stack application to manage patients, their statuses, and assigned healthcare providers. It supports patient creation, updates, status history, provider assignment, and timeline tracking.
 
-At VIP Medical Group, we are building a new internal module for our Medwork platform—a system that allows our staff to register patients, assign them to doctors (providers), and track their clinical status throughout their care journey.
+---
 
-In this challenge, you’ll simulate part of this module by creating a full-stack application that allows managing patients, providers, and clinical statuses with a parent-child hierarchy.
+## 🚀 Getting Started
 
-We are **not evaluating specific tools or patterns**. We simply want to understand how you think, how you code, and how you approach real-world problems. Be yourself.
+### 📦 Prerequisites
 
+* Node.js `>=18`
+* Docker + Docker Compose (for database)
+* (Optional) Yarn / npm
 
+### 🛠️ Installation
 
-### What You Need to Build
+1. **Clone the repository:**
 
-A functional **full stack application** with the ability to:
+```bash
+git clone https://github.com/<your-user>/medwork.git
+cd medwork
+```
 
-1. Create patients and providers
-2. Assign a provider to a patient
-3. Change the patient’s clinical status (with hierarchy)
-4. Display the status change history of a patient
+2. **Start PostgreSQL with Docker:**
 
+```bash
+docker-compose up -d
+```
 
+3. **Install dependencies:**
 
-### Database Schema
+```bash
+# From root folder
+cd backend
+npm install
 
-You must implement these 4 tables exactly as described below:
+cd ../frontend
+npm install
+```
 
-#### 1. `patients`
+4.  **Start the microservices**
 
-| Field        | Type      |
-| ------------ | --------- |
-| id           | UUID      |
-| full\_name   | string    |
-| email        | string    |
-| phone        | string    |
-| provider\_id | UUID (FK) |
-| status\_id   | UUID (FK) |
-| created\_at  | datetime  |
+In separate terminals (or with a process manager like pm2), run:
 
-#### 2. `providers`
+```bash
+# Start Patients Microservice
+cd backend/apps/patients-ms
+npx nest start
 
-| Field       | Type     |
-| ----------- | -------- |
-| id          | UUID     |
-| full\_name  | string   |
-| specialty   | string   |
-| created\_at | datetime |
+# Start Providers Microservice
+cd backend/apps/providers-ms
+npx nest start
 
-#### 3. `statuses`
+# Start Statuses Microservice
+cd backend/apps/statuses-ms
+npx nest start
 
-| Field      | Type                            |
-| ---------- | ------------------------------- |
-| id         | UUID                            |
-| name       | string                          |
-| parent\_id | UUID (nullable, FK to statuses) |
-| order      | integer                         |
+# Finally, start the API Gateway
+cd backend/apps/api-gateway
+npx nest start
+```
 
-> This table allows parent-child status relationships.
+5. **Run the frontend (Next.js):**
 
-#### 4. `status_history`
+```bash
+cd frontend
+npm run dev
+```
 
-| Field       | Type      |
-| ----------- | --------- |
-| id          | UUID      |
-| patient\_id | UUID (FK) |
-| status\_id  | UUID (FK) |
-| changed\_at | datetime  |
+> Frontend: [http://localhost:3000](http://localhost:3000)
+> Backend: [http://localhost:3001](http://localhost:3001) (if exposed)
 
+---
 
+## 🌱 Seed Script
 
-### Preloaded Statuses
+Currently, only statuses are seeded.
 
-These statuses must be preloaded in the database:
+```bash
+cd backend
+npm run seed:statuses
+```
 
-* `Scheduled`
+This preloads some default status values like Pending, Under review, Approved.
 
-  * `Checked-In`
+A similar seed script for providers can be created later in seed:providers
+---
 
-    * `In Consultation`
-    * `Cancelled`
-  * `No-Show`
+## 🧱 Architecture Notes
 
-You can use a seed script or migrations to insert them.
+### Backend
 
+* Framework: **NestJS** (TypeScript)
+* ORM: **TypeORM**
+* DB: **PostgreSQL**
+* Structure:
 
+  * `patients-service`, `providers-service`, `statuses-service`
+  * RESTful endpoints (e.g. `/api/patients`)
+  * Seeders using a custom `SeedService`
 
-### Tech Stack
+### Frontend
 
-#### Backend
-
-* Language: TypeScript
-* Framework: **NestJS** or **Express**
-* Database: **PostgreSQL**, **MySQL**, or **MongoDB**
-* If you prefer, you may separate logic into small services (e.g., `patients-service`, `statuses-service`)
-
-  * Use **HTTP**, **events**, or **gRPC** for inter-service communication
-  * If using multiple services, you must include an **API Gateway**
-
-#### Frontend
-
-* Framework: **React** (Vite or Next.js)
+* Framework: **Next.js (App Router)**
 * Styling: **TailwindCSS**
-* State management: **Redux Toolkit** or **Zustand**
-* Data fetching: **Tanstack Query**
+* State/Data: Local component state + Axios
+* Structure:
 
+  * `app/dashboard`: Patient dashboard and actions
+  * `app/dashboard/patients/[id]/edit`: Patient edit screen
+  * `app/dashboard/status/[id]`: Status change
+  * `app/dashboard/assign`: Assign provider
 
+---
+### Architecture Overview
 
-### Required Screens
+This project uses a modular microservices architecture with NestJS:
 
-You should include the following screens:
+* Each core domain (Patients, Providers, Statuses) is an isolated microservice.
 
-1. Patient creation form
-2. Provider creation form
-3. Patient list (showing status and assigned provider)
-4. Patient status update control (e.g., dropdown)
-5. Patient status history (as timeline or list)
+*Microservices communicate via message patterns using the built-in transport layer.
 
-> **Optional screen:** Provider list view.
+T* he API Gateway exposes a REST API and acts as the entry point for frontend apps.
 
+*The frontend (Next.js + TailwindCSS) consumes the gateway and provides admin-level UIs.
 
+## ✅ Features Implemented
 
-### Submission Instructions
+* ✅ Patient creation and edit
+* ✅ Assign provider to patient
+* ✅ Update patient status
+* ✅ View patient history (timeline)
+* ✅ Pagination in patient list
 
-* You will receive a Git repository link for the base project.
-* **Fork the repository**, complete your work in a new branch, and **submit a pull request** to share your solution.
-* Include a `README.md` with:
+---
 
-  * Clear instructions to run the project locally
-  * A short explanation of your architecture or design decisions
-  * A seed script to preload providers and statuses
+## 📁 Folder Structure (Simplified)
 
+```
+/
+├── backend/           # NestJS app
+│   └── src/
+│       ├── patients/
+│       ├── providers/
+│       ├── statuses/
+│       └── seed/
+├── frontend/          # Next.js App Router
+│   └── app/
+│       └── dashboard/
+│           ├── patients/
+│           ├── assign/
+│           ├── status/
+│           └── history/
+└── docker-compose.yml
+```
 
+---
 
-### Time Expectation
+## 🧪 Technologies Used
 
-You should spend no more than **8 hours** on this task.
+| Layer     | Tech                                   |
+| --------- | -------------------------------------- |
+| Backend   | NestJS, TypeORM, PostgreSQL            |
+| Frontend  | Next.js, TailwindCSS, Axios            |
+| Database  | Supabase / Docker PostgreSQL           |
+| Dev Tools | ESLint, Prettier, ts-node, seed script |
 
-Don’t worry if you can’t finish everything. What matters most is **how far you get** and **how you approach the problem**.
+---
+
+## 👤 Author
+[@ezesubu](https://github.com/ezesubu)
