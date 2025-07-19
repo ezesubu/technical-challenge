@@ -2,6 +2,12 @@
 
 Medwork is a full-stack application to manage patients, their statuses, and assigned healthcare providers. It supports patient creation, updates, status history, provider assignment, and timeline tracking.
 
+<img width="1253" height="501" alt="image" src="https://github.com/user-attachments/assets/2aa7e6f7-5de0-43df-bbfe-d49ee7bd82fa" />
+<img width="1275" height="423" alt="image" src="https://github.com/user-attachments/assets/cc4e3d50-a0cc-4174-932f-8a9fae899e2e" />
+<img width="1166" height="663" alt="Screenshot 2025-07-19 110804" src="https://github.com/user-attachments/assets/42749439-c685-46ba-8404-2587fcf80004" />
+<img width="2041" height="229" alt="image" src="https://github.com/user-attachments/assets/c3b8aae4-8427-424f-b773-dc977f65c4d8" />
+
+
 ---
 
 ## 🚀 Getting Started
@@ -123,6 +129,7 @@ This project uses a modular microservices architecture with NestJS:
 T* he API Gateway exposes a REST API and acts as the entry point for frontend apps.
 
 *The frontend (Next.js + TailwindCSS) consumes the gateway and provides admin-level UIs.
+
 
 ## ✅ Features Implemented
 
