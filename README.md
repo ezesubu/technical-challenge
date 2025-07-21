@@ -40,7 +40,7 @@ docker-compose up -d
 cd backend
 npm install
 
-cd ../frontend
+cd ../web
 npm install
 ```
 
@@ -69,7 +69,7 @@ npx nest start
 5. **Run the frontend (Next.js):**
 
 ```bash
-cd frontend
+cd web
 npm run dev
 ```
 
