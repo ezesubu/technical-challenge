@@ -147,11 +147,11 @@ T* he API Gateway exposes a REST API and acts as the entry point for frontend ap
 /
 ├── backend/           # NestJS app
 │   └── src/
-│       ├── patients/
-│       ├── providers/
-│       ├── statuses/
-│       └── seed/
-├── frontend/          # Next.js App Router
+│       ├── patients-ms/
+│       ├── providers-ms/
+│       ├── statuses-ms/
+│           └── seed/
+├── web/          # Next.js App Router
 │   └── app/
 │       └── dashboard/
 │           ├── patients/
