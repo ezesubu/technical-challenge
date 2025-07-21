@@ -78,12 +78,12 @@ npm run dev
 
 ---
 
-## 🌱 Seed Script
+## 🌱 Seed Script 
 
 Currently, only statuses are seeded.
 
 ```bash
-cd backend
+cd backend/apps/statuses-ms
 npm run seed:statuses
 ```
 
@@ -146,7 +146,7 @@ T* he API Gateway exposes a REST API and acts as the entry point for frontend ap
 ```
 /
 ├── backend/           # NestJS app
-│   └── src/
+│   └── apps/
 │       ├── patients-ms/
 │       ├── providers-ms/
 │       ├── statuses-ms/
