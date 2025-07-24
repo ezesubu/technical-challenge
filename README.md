@@ -50,20 +50,20 @@ In separate terminals (or with a process manager like pm2), run:
 
 ```bash
 # Start Patients Microservice
-cd backend/apps/patients-ms
-npx run start
+cd backend
+npx nest start api-gateway 
 
 # Start Providers Microservice
-cd backend/apps/providers-ms
-npx run start
+cd backend
+npx nest start providers-ms
 
 # Start Statuses Microservice
-cd backend/apps/statuses-ms
-npx run start
+cd backend
+npx run start statuses-ms
 
 # Finally, start the API Gateway
-cd backend/apps/api-gateway
-npx run start
+cd backend
+npx nest start api-gateway
 ```
 
 5. **Run the frontend (Next.js):**
