@@ -23,7 +23,7 @@ Medwork is a full-stack application to manage patients, their statuses, and assi
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/<your-user>/medwork.git
+[git clone https://github.com/<your-user>/medwork.git](https://github.com/ezesubu/technical-challenge)
 cd medwork
 ```
 
@@ -59,7 +59,7 @@ npx nest start providers-ms
 
 # Start Statuses Microservice
 cd backend
-npx run start statuses-ms
+npx nest start statuses-ms
 
 # Finally, start the API Gateway
 cd backend
